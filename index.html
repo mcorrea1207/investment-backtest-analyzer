@@ -119,39 +119,62 @@
     </div>
 
     <script>
-        document.getElementById('backtestForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        console.log('Script cargado correctamente');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM cargado');
             
-            const startYear = document.getElementById('startYear').value;
-            const numInvestors = document.getElementById('numInvestors').value;
-            const rebalancing = document.getElementById('rebalancing').value;
-            
-            // Simulación simple de resultados
-            const mockResults = {
-                "2015": { return: 12.5, benchmark: 8.2 },
-                "2016": { return: 15.3, benchmark: 11.9 },
-                "2017": { return: 18.7, benchmark: 13.4 },
-                "2018": { return: 10.2, benchmark: 6.8 },
-                "2019": { return: 22.1, benchmark: 18.5 },
-                "2020": { return: 35.4, benchmark: 16.3 }
-            };
-            
-            const result = mockResults[startYear];
-            const alpha = result.return - result.benchmark;
-            
-            document.getElementById('resultText').innerHTML = `
-                <strong>Período:</strong> ${startYear} - 2025<br>
-                <strong>Inversores seguidos:</strong> ${numInvestors}<br>
-                <strong>Rebalanceo:</strong> ${rebalancing === 'true' ? 'Sí' : 'No'}<br>
-                <strong>Retorno anual promedio:</strong> ${result.return}%<br>
-                <strong>S&P 500:</strong> ${result.benchmark}%<br>
-                <strong>Alpha (diferencia):</strong> +${alpha.toFixed(1)}%<br>
-                <br>
-                <em>Nota: Estos son resultados simulados para demostración.</em>
-            `;
-            
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            const form = document.getElementById('backtestForm');
+            if (form) {
+                console.log('Formulario encontrado');
+                form.addEventListener('submit', function(e) {
+                    console.log('Formulario enviado');
+                    e.preventDefault();
+                    
+                    const startYear = document.getElementById('startYear').value;
+                    const numInvestors = document.getElementById('numInvestors').value;
+                    const rebalancing = document.getElementById('rebalancing').value;
+                    
+                    console.log('Valores:', { startYear, numInvestors, rebalancing });
+                    
+                    // Simulación simple de resultados
+                    const mockResults = {
+                        "2015": { return: 12.5, benchmark: 8.2 },
+                        "2016": { return: 15.3, benchmark: 11.9 },
+                        "2017": { return: 18.7, benchmark: 13.4 },
+                        "2018": { return: 10.2, benchmark: 6.8 },
+                        "2019": { return: 22.1, benchmark: 18.5 },
+                        "2020": { return: 35.4, benchmark: 16.3 }
+                    };
+                    
+                    const result = mockResults[startYear];
+                    console.log('Resultado:', result);
+                    
+                    if (result) {
+                        const alpha = result.return - result.benchmark;
+                        
+                        document.getElementById('resultText').innerHTML = `
+                            <strong>Período:</strong> ${startYear} - 2025<br>
+                            <strong>Inversores seguidos:</strong> ${numInvestors}<br>
+                            <strong>Rebalanceo:</strong> ${rebalancing === 'true' ? 'Sí' : 'No'}<br>
+                            <strong>Retorno anual promedio:</strong> ${result.return}%<br>
+                            <strong>S&P 500:</strong> ${result.benchmark}%<br>
+                            <strong>Alpha (diferencia):</strong> +${alpha.toFixed(1)}%<br>
+                            <br>
+                            <em>Nota: Estos son resultados simulados para demostración.</em>
+                        `;
+                        
+                        document.getElementById('result').style.display = 'block';
+                        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+                        console.log('Resultados mostrados');
+                    } else {
+                        console.error('No se encontraron resultados para el año:', startYear);
+                        alert('Error: No se encontraron datos para el año ' + startYear);
+                    }
+                });
+            } else {
+                console.error('No se encontró el formulario');
+            }
         });
     </script>
 </body>
