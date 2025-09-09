@@ -473,12 +473,15 @@
                         minTopPct: document.getElementById('minTopPct').value === 'null' ? null : parseInt(document.getElementById('minTopPct').value)
                     };
                     
-                    console.log('Configuración:', config);
+                    console.log('Configuración del backtest:', config);
                     
-                    // Simular análisis (en la realidad aquí conectarías con tu backend)
-                    setTimeout(() => {
-                        const results = generateSimulatedResults(config);
-                        displayResults(results, config);
+                    // Ejecutar backtest real
+                    runActualBacktest(config).then(results => {
+                        if (results.success) {
+                            displayResults(results, config);
+                        } else {
+                            displayError(results.error || 'Error ejecutando backtest');
+                        }
                         
                         // Ocultar loading
                         loadingDiv.style.display = 'none';
@@ -488,7 +491,15 @@
                         
                         // Scroll a resultados
                         resultsDiv.scrollIntoView({ behavior: 'smooth' });
-                    }, 2000);
+                    }).catch(error => {
+                        console.error('Error:', error);
+                        displayError('Error de conexión: ' + error.message);
+                        
+                        // Ocultar loading
+                        loadingDiv.style.display = 'none';
+                        runButton.disabled = false;
+                        runButton.textContent = '🚀 Ejecutar Backtest Completo';
+                    });
                 });
             } else {
                 console.error('No se encontró el formulario');
@@ -577,6 +588,17 @@
             }
             
             return timeline;
+        }
+        
+        function getSelectionModeLabel(mode) {
+            const modes = {
+                '0': 'Aleatorio',
+                '1': 'Top por rendimiento previo',
+                '2': 'Valor de portafolio',
+                '3': 'CAGR 3 años',
+                '4': 'CAGR acumulada'
+            };
+            return modes[mode] || 'Aleatorio';
         }
         
         function displayError(message) {
