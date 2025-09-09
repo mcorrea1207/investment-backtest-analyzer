@@ -446,37 +446,63 @@
             const resultsDiv = document.getElementById('results');
             const runButton = document.getElementById('runButton');
             
-            if (form) {
-                console.log('Formulario encontrado');
+            console.log('Form:', form);
+            console.log('Loading div:', loadingDiv);
+            console.log('Results div:', resultsDiv);
+            console.log('Run button:', runButton);
+            
+            if (form && runButton) {
+                console.log('Formulario y botón encontrados');
+                
+                // Add click event to button as backup
+                runButton.addEventListener('click', function(e) {
+                    console.log('Botón clickeado');
+                    e.preventDefault();
+                    executeBacktest();
+                });
+                
                 form.addEventListener('submit', function(e) {
                     console.log('Formulario enviado');
                     e.preventDefault();
+                    executeBacktest();
+                });
+                
+                function executeBacktest() {
+                    console.log('Ejecutando backtest...');
                     
                     // Mostrar loading
-                    loadingDiv.style.display = 'block';
-                    resultsDiv.style.display = 'none';
+                    if (loadingDiv) loadingDiv.style.display = 'block';
+                    if (resultsDiv) resultsDiv.style.display = 'none';
                     runButton.disabled = true;
                     runButton.textContent = 'Ejecutando...';
                     
-                    // Recopilar todos los parámetros
+                    // Check if all required elements exist
+                    const requiredIds = ['startYear', 'endYear', 'numInvestors', 'selectionMode', 'topPicks'];
+                    const missingElements = requiredIds.filter(id => !document.getElementById(id));
+                    
+                    if (missingElements.length > 0) {
+                        console.error('Missing elements:', missingElements);
+                        alert('Error: Faltan elementos en el formulario: ' + missingElements.join(', '));
+                        runButton.disabled = false;
+                        runButton.textContent = '🚀 Ejecutar Backtest Completo';
+                        return;
+                    }
+                    
+                    // Recopilar parámetros básicos
                     const config = {
                         startYear: document.getElementById('startYear').value,
                         endYear: document.getElementById('endYear').value,
                         numInvestors: document.getElementById('numInvestors').value,
                         selectionMode: document.getElementById('selectionMode').value,
                         topPicks: document.getElementById('topPicks').value,
-                        buyQuarter: document.getElementById('buyQuarter').value,
-                        sellQuarter: document.getElementById('sellQuarter').value,
-                        dataSourceQuarter: document.getElementById('dataSourceQuarter').value,
-                        rebalancing: document.getElementById('rebalancing').value === 'true',
-                        redistributeFailed: document.getElementById('redistributeFailed').value === 'true',
-                        minTopPct: document.getElementById('minTopPct').value === 'null' ? null : parseInt(document.getElementById('minTopPct').value)
+                        rebalancing: document.getElementById('rebalancing') ? document.getElementById('rebalancing').value === 'true' : true
                     };
                     
                     console.log('Configuración del backtest:', config);
                     
                     // Ejecutar backtest real
                     runActualBacktest(config).then(results => {
+                        console.log('Resultados recibidos:', results);
                         if (results.success) {
                             displayResults(results, config);
                         } else {
@@ -484,25 +510,27 @@
                         }
                         
                         // Ocultar loading
-                        loadingDiv.style.display = 'none';
-                        resultsDiv.style.display = 'block';
+                        if (loadingDiv) loadingDiv.style.display = 'none';
+                        if (resultsDiv) resultsDiv.style.display = 'block';
                         runButton.disabled = false;
                         runButton.textContent = '🚀 Ejecutar Backtest Completo';
                         
                         // Scroll a resultados
-                        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+                        if (resultsDiv) resultsDiv.scrollIntoView({ behavior: 'smooth' });
                     }).catch(error => {
                         console.error('Error:', error);
                         displayError('Error de conexión: ' + error.message);
                         
                         // Ocultar loading
-                        loadingDiv.style.display = 'none';
+                        if (loadingDiv) loadingDiv.style.display = 'none';
                         runButton.disabled = false;
                         runButton.textContent = '🚀 Ejecutar Backtest Completo';
                     });
-                });
+                }
             } else {
-                console.error('No se encontró el formulario');
+                console.error('No se encontró el formulario o el botón');
+                console.error('Form element:', form);
+                console.error('Button element:', runButton);
             }
         });
         
