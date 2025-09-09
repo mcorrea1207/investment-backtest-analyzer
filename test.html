@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple</title>
+</head>
+<body>
+    <h1>Test Simple del Backtest</h1>
+    
+    <form id="backtestForm">
+        <label for="startYear">Año inicio:</label>
+        <select id="startYear">
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+        </select>
+        
+        <label for="endYear">Año fin:</label>
+        <select id="endYear">
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+        </select>
+        
+        <label for="numInvestors">Inversores:</label>
+        <select id="numInvestors">
+            <option value="3">3</option>
+            <option value="5">5</option>
+        </select>
+        
+        <button type="submit" id="runButton">🚀 Ejecutar Test</button>
+    </form>
+    
+    <div id="loading" style="display: none;">
+        Cargando...
+    </div>
+    
+    <div id="results" style="display: none;">
+        <h2>Resultados</h2>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        console.log('Script cargado');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM listo');
+            
+            const form = document.getElementById('backtestForm');
+            const button = document.getElementById('runButton');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            console.log('Elementos:', { form, button, loading, results });
+            
+            if (form && button) {
+                console.log('Elementos encontrados, agregando listeners');
+                
+                button.addEventListener('click', function(e) {
+                    console.log('¡Botón clickeado!');
+                    e.preventDefault();
+                    
+                    loading.style.display = 'block';
+                    results.style.display = 'none';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        const config = {
+                            startYear: document.getElementById('startYear').value,
+                            endYear: document.getElementById('endYear').value,
+                            numInvestors: document.getElementById('numInvestors').value
+                        };
+                        
+                        console.log('Config:', config);
+                        
+                        document.getElementById('output').innerHTML = 
+                            `<p>¡Funcionó! Años: ${config.startYear}-${config.endYear}, Inversores: ${config.numInvestors}</p>`;
+                        
+                        loading.style.display = 'none';
+                        results.style.display = 'block';
+                        button.disabled = false;
+                    }, 1000);
+                });
+            } else {
+                console.error('No se encontraron elementos');
+            }
+        });
+    </script>
+</body>
+</html>
