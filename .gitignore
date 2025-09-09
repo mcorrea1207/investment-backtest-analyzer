@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+.env
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (optional - comment out if you want to include them)
+*.csv
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Images (optional - uncomment if you want to exclude images)
+# *.png
+# *.jpg
+# *.jpeg

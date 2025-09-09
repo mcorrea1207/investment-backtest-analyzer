@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Investment Backtest Analyzer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-item h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+
+        .tech-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 2rem 0;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #5a67d8;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="#"><i class="fab fa-github"></i> GitHub</a>
+        </nav>
+
+        <div class="content">
+            <h1><i class="fas fa-info-circle"></i> About Investment Backtest Analyzer</h1>
+            
+            <p>The Investment Backtest Analyzer is a comprehensive Python-based tool designed for sophisticated investment strategy analysis and backtesting. Built for investors, analysts, and researchers who need professional-grade performance analysis.</p>
+
+            <h2>What It Does</h2>
+            <p>This tool allows you to:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>Follow and analyze the performance of multiple investors simultaneously</li>
+                <li>Backtest investment strategies across different time periods (2012-2025)</li>
+                <li>Compare your strategy against market benchmarks (S&P 500, NASDAQ)</li>
+                <li>Calculate key performance metrics like CAGR, Alpha, and Sharpe ratios</li>
+                <li>Generate detailed reports and visualizations</li>
+                <li>Export transaction logs and performance data</li>
+            </ul>
+
+            <h2>Key Features</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4><i class="fas fa-users"></i> Multi-Investor Tracking</h4>
+                    <p>Track up to 5 investors simultaneously with different selection criteria based on historical performance, portfolio value, or CAGR metrics.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4><i class="fas fa-calendar-alt"></i> Flexible Timing</h4>
+                    <p>Configure buy/sell quarters, data source periods, and lookback windows to match your investment strategy.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4><i class="fas fa-sync-alt"></i> Rebalancing Options</h4>
+                    <p>Choose between rebalancing and buy-and-hold strategies to see how different approaches affect returns.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4><i class="fas fa-filter"></i> Advanced Filtering</h4>
+                    <p>Set minimum portfolio percentage thresholds and apply various selection modes for investor filtering.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4><i class="fas fa-chart-line"></i> Performance Analysis</h4>
+                    <p>Comprehensive performance metrics including alpha calculation, CAGR analysis, and benchmark comparisons.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4><i class="fas fa-download"></i> Data Export</h4>
+                    <p>Export detailed transaction logs, performance reports, and generate publication-ready charts.</p>
+                </div>
+            </div>
+
+            <h2>Technical Stack</h2>
+            <p>Built with modern Python technologies:</p>
+            <div class="tech-stack">
+                <span class="tech-badge">Python 3.x</span>
+                <span class="tech-badge">Pandas</span>
+                <span class="tech-badge">Matplotlib</span>
+                <span class="tech-badge">NumPy</span>
+                <span class="tech-badge">yfinance</span>
+                <span class="tech-badge">CSV Data Processing</span>
+            </div>
+
+            <h2>Configuration Options</h2>
+            <p>The tool offers extensive configuration options that can be adjusted in the main script:</p>
+            
+            <div class="code-block">
+NUM_INVESTORS = 5          # Number of investors to track
+START_YEAR = 2012          # Backtest start year
+END_YEAR = 2026           # Backtest end year
+HAS_RELOCATION = True     # Enable/disable rebalancing
+SELECTION_MODE = 3        # Investor selection method
+TOP_PICKS_PER_INVESTOR = 3 # Number of stocks per investor
+MIN_TOP1_PCT = 15         # Minimum portfolio percentage threshold
+            </div>
+
+            <h2>Selection Modes</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>Mode 0: Random Selection</h4>
+                    <p>Randomly selects investors from available dataset with coverage analysis.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4>Mode 1: Prior Performance</h4>
+                    <p>Selects investors based on their performance in the previous year.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4>Mode 2: Portfolio Value</h4>
+                    <p>Ranks investors by their total portfolio value in the previous quarter.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4>Mode 3: CAGR 3-Year</h4>
+                    <p>Uses 3-year compound annual growth rate for investor ranking.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h4>Mode 4: Cumulative CAGR</h4>
+                    <p>Ranks based on cumulative CAGR over all available historical data.</p>
+                </div>
+            </div>
+
+            <h2>Output and Reports</h2>
+            <p>The analyzer generates several types of output:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Transaction Logs:</strong> Detailed CSV files with all buy/sell transactions</li>
+                <li><strong>Performance Charts:</strong> Visual comparison of your strategy vs benchmarks</li>
+                <li><strong>Annual Performance:</strong> Year-by-year breakdown with alpha calculations</li>
+                <li><strong>CAGR Analysis:</strong> Compound annual growth rate calculations</li>
+                <li><strong>Track Records:</strong> Quarterly and annual investor performance history</li>
+                <li><strong>Batch Analysis:</strong> Run multiple scenarios and compare results</li>
+            </ul>
+
+            <h2>Data Requirements</h2>
+            <p>The tool works with CSV files containing:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>Historical stock prices (daily and quarterly)</li>
+                <li>Investor portfolio positions by quarter</li>
+                <li>Benchmark data (S&P 500, NASDAQ)</li>
+                <li>Portfolio allocation percentages</li>
+            </ul>
+
+            <h2>Use Cases</h2>
+            <p>Perfect for:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Investment Research:</strong> Academic or professional investment strategy research</li>
+                <li><strong>Portfolio Management:</strong> Testing different allocation strategies</li>
+                <li><strong>Educational Purposes:</strong> Learning about quantitative finance and backtesting</li>
+                <li><strong>Strategy Development:</strong> Developing and refining investment approaches</li>
+                <li><strong>Performance Attribution:</strong> Understanding what drives investment returns</li>
+            </ul>
+
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

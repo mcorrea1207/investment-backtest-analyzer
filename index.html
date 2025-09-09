@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Backtest Analyzer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .stats-section {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .config-panel {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            margin: 3rem 0;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: rgba(255,255,255,0.8);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 3rem;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin: 2rem 0;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2) !important;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav style="text-align: center; margin-bottom: 2rem;">
+            <a href="index.html" style="color: white; text-decoration: none; margin: 0 15px; padding: 8px 16px; border-radius: 5px; transition: background 0.3s ease;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="about.html" style="color: white; text-decoration: none; margin: 0 15px; padding: 8px 16px; border-radius: 5px; transition: background 0.3s ease;">
+                <i class="fas fa-info-circle"></i> About
+            </a>
+            <a href="#" style="color: white; text-decoration: none; margin: 0 15px; padding: 8px 16px; border-radius: 5px; transition: background 0.3s ease;">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </nav>
+
+        <header>
+            <h1><i class="fas fa-chart-line"></i> Investment Backtest Analyzer</h1>
+            <p>Professional-grade investment strategy backtesting and analysis tool</p>
+        </header>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Multi-Investor Analysis</h3>
+                <p>Analyze and follow up to 5 top investors simultaneously. Compare strategies and learn from the best performers in the market.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-cogs"></i>
+                <h3>Advanced Configuration</h3>
+                <p>Customize every aspect of your backtest: rebalancing, investor selection modes, minimum thresholds, and timing parameters.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Comprehensive Analytics</h3>
+                <p>Get detailed performance metrics, CAGR analysis, alpha calculations, and comparison against S&P 500 and NASDAQ benchmarks.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-history"></i>
+                <h3>Historical Backtesting</h3>
+                <p>Test strategies from 2012-2025 with quarterly and daily price data. See how your strategy would have performed in different market conditions.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-sync-alt"></i>
+                <h3>Rebalancing Options</h3>
+                <p>Choose between rebalancing and buy-and-hold strategies. See how different approaches affect long-term returns.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-download"></i>
+                <h3>Export & Analysis</h3>
+                <p>Export detailed transaction logs, performance reports, and generate publication-ready charts for your analysis.</p>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Current Performance Metrics</h2>
+            <p style="text-align: center; color: #6c757d;">Based on latest backtest results (2012-2025)</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">13</span>
+                    <span>Years Analyzed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5</span>
+                    <span>Investors Tracked</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span>Top Picks/Investor</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">Q1</span>
+                    <span>Buy Quarter</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">Q4</span>
+                    <span>Sell Quarter</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15%</span>
+                    <span>Min Top-1 Threshold</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Configuration Panel</h2>
+            <p>Customize your backtest parameters for optimal analysis</p>
+            
+            <div class="config-panel">
+                <div class="config-grid">
+                    <div class="config-item">
+                        <span><strong>Number of Investors:</strong></span>
+                        <span>5</span>
+                    </div>
+                    <div class="config-item">
+                        <span><strong>Start Year:</strong></span>
+                        <span>2012</span>
+                    </div>
+                    <div class="config-item">
+                        <span><strong>End Year:</strong></span>
+                        <span>2026</span>
+                    </div>
+                    <div class="config-item">
+                        <span><strong>Rebalancing:</strong></span>
+                        <span>✅ Enabled</span>
+                    </div>
+                    <div class="config-item">
+                        <span><strong>Selection Mode:</strong></span>
+                        <span>CAGR 3y</span>
+                    </div>
+                    <div class="config-item">
+                        <span><strong>Top Picks/Investor:</strong></span>
+                        <span>3</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-placeholder">
+                <i class="fas fa-chart-line" style="margin-right: 10px;"></i>
+                Performance Comparison Chart
+                <br><small>Real charts generated by the application</small>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>Key Features</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div>
+                    <h4><i class="fas fa-filter"></i> Investor Selection Modes</h4>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Random selection</li>
+                        <li>Top performers by prior performance</li>
+                        <li>Portfolio value ranking</li>
+                        <li>CAGR 3-year ranking</li>
+                        <li>Cumulative CAGR ranking</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4><i class="fas fa-calendar-alt"></i> Timing Controls</h4>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Configurable buy/sell quarters</li>
+                        <li>Data source quarter selection</li>
+                        <li>Lookback period configuration</li>
+                        <li>YTD performance tracking</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4><i class="fas fa-chart-pie"></i> Analysis Tools</h4>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Alpha vs S&P 500 calculation</li>
+                        <li>CAGR and cumulative returns</li>
+                        <li>Transaction history export</li>
+                        <li>Performance visualization</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4><i class="fas fa-database"></i> Data Sources</h4>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Daily and quarterly price data</li>
+                        <li>Multiple investor portfolios</li>
+                        <li>Benchmark comparisons</li>
+                        <li>Historical position tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Analyze Your Investment Strategy?</h2>
+            <p style="margin: 1rem 0;">Download the source code and start backtesting your investment approach today</p>
+            <div style="margin-top: 2rem;">
+                <a href="#" class="btn" style="margin: 0 10px;">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                <a href="#" class="btn btn-secondary" style="margin: 0 10px;">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2025 Investment Backtest Analyzer. Open source project for educational purposes.</p>
+            <p style="margin-top: 0.5rem;">
+                <i class="fas fa-code"></i> Built with Python | 
+                <i class="fas fa-chart-line"></i> Powered by pandas & matplotlib
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple animation for stats
+        document.addEventListener('DOMContentLoaded', function() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                if (!isNaN(finalValue)) {
+                    let currentValue = 0;
+                    const increment = finalValue / 50;
+                    const timer = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= finalValue) {
+                            currentValue = finalValue;
+                            clearInterval(timer);
+                        }
+                        stat.textContent = Math.floor(currentValue);
+                    }, 50);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
